@@ -3,6 +3,8 @@ from tensorflow.keras.models import load_model
 import cv2
 import numpy as np
 from tensorflow.keras.preprocessing.image import img_to_array
+
+
  # Load the model
 model = Sequential()
 classifier = load_model('ferjj.h5') # This model has a set of 6 classes
@@ -12,6 +14,8 @@ classes = list(class_labels.values())
 # print(class_labels)
 face_classifier = cv2.CascadeClassifier('./Haarcascades/haarcascade_frontalface_default.xml')
 # This function is for designing the overlay text on the predicted image boxes.
+
+
 def text_on_detected_boxes(text,text_x,text_y,image,font_scale = 1,
                            font = cv2.FONT_HERSHEY_SIMPLEX,
                            FONT_COLOR = (0, 0, 0),
@@ -25,6 +29,8 @@ def text_on_detected_boxes(text,text_x,text_y,image,font_scale = 1,
     cv2.rectangle(image, box_coords[0], box_coords[1], rectangle_bgr, cv2.FILLED)
     cv2.putText(image, text, (text_x, text_y), font, fontScale=font_scale, color=FONT_COLOR,thickness=FONT_THICKNESS)
 # Detection of the emotions on an image:
+
+
 def face_detector_image(img):
     gray = cv2.cvtColor(img.copy(), cv2.COLOR_BGR2GRAY) # Convert the image into GrayScale image
     faces = face_classifier.detectMultiScale(gray, 1.3, 5)
@@ -39,6 +45,8 @@ def face_detector_image(img):
         allfaces.append(roi_gray)
         rects.append((x, w, y, h))
     return rects, allfaces, img
+    
+    
 def emotionImage(imgPath):
     img = cv2.imread(imgPath)
     rects, faces, image = face_detector_image(img)
@@ -58,6 +66,8 @@ def emotionImage(imgPath):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 # Detection of the expression on video stream
+
+
 def face_detector_video(img):
     # Convert image to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -69,6 +79,8 @@ def face_detector_video(img):
         roi_gray = gray[y:y + h, x:x + w]
     roi_gray = cv2.resize(roi_gray, (48, 48), interpolation=cv2.INTER_AREA)
     return (x, w, y, h), roi_gray, img
+    
+   
 def emotionVideo(cap):
     while True:
         ret, frame = cap.read()
@@ -91,6 +103,8 @@ def emotionVideo(cap):
             break
     cap.release()
     cv2.destroyAllWindows()
+    
+    
 if __name__ == '__main__':
     # camera = cv2.VideoCapture(0) # If you are using an USB Camera then Change use 1 instead of 0.
     # emotionVideo(camera)
