@@ -108,5 +108,5 @@ def emotionVideo(cap):
 if __name__ == '__main__':
     # camera = cv2.VideoCapture(0) # If you are using an USB Camera then Change use 1 instead of 0.
     # emotionVideo(camera)
-    IMAGE_PATH = "   "
+    IMAGE_PATH = "~/tensorflow-dex/R-Emote/sad_face.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
