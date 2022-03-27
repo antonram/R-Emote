@@ -51,7 +51,7 @@ if __name__ == '__main__':
     CHANGE HOST, DOESN'T WORK!!!!!!
     
     '''
-    client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
+    client.connect(host="mqtt://localhost", port=1883, keepalive=60)
     client.loop_start()
 
     # Connect the Grove Sound Sensor to analog port A0

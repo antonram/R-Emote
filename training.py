@@ -174,7 +174,7 @@ if __name__ == '__main__':
     CHANGE HOST, DOESN'T EXIST ANYMORE!!!!!!
     
     '''
-    client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
+    client.connect(host="mqtt://localhost", port=1883, keepalive=60)
     client.loop_start()
     
     
