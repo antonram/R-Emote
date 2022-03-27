@@ -7,10 +7,9 @@ from tensorflow.keras.preprocessing.image import img_to_array
 
 '''
 
-DIMENSION THAT WORK ===== 275 x 183 pixels!!
+SEND LABEL THRU MQTT TO RASPBERRY PI
 
-OTHER SIZES DO NOT WORK, MAKE SURE TO RESIZE WHEN IMPLEMENTING!!!!!!
-
+FROM RPI, CODE WHAT TO DO WITH LABEL!!!
 
 '''
 
