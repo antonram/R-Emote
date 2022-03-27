@@ -1,3 +1,4 @@
+import paho.mqtt.client as mqtt
 from tensorflow.keras import Sequential
 from tensorflow.keras.models import load_model
 import cv2
@@ -13,6 +14,7 @@ FROM RPI, CODE WHAT TO DO WITH LABEL!!!
 
 '''
 
+global client
  # Load the model
 model = Sequential()
 classifier = load_model('ferjj.h5') # This model has a set of 6 classes
@@ -22,6 +24,58 @@ classes = list(class_labels.values())
 # print(class_labels)
 face_classifier = cv2.CascadeClassifier('./Haarcascades/haarcascade_frontalface_default.xml')
 # This function is for designing the overlay text on the predicted image boxes.
+
+'''
+
+
+MQTT STUFF INTERRUPT
+
+
+'''
+
+rpi1_values = []
+
+# MQTT
+def on_connect(client, userdata, flags, rc):
+    print("Connected to server (i.e., broker) with result code "+str(rc))
+
+    #subscribe to the ultrasonic ranger topic here
+    client.subscribe('rpi1/sound_sensor', 2)
+    client.message_callback_add('rpi1/sound_sensor', rpi1_sound_callback)
+
+
+#Default message callback.
+def on_message(client, userdata, msg):
+    pass
+
+
+def rpi1_sound_callback(client, userdata, msg):
+    if len(rpi1_values) < 3:
+    # ADD EACH INDIVIDUAL DATA POINT
+        rpi1_values.append(int(msg.payload))
+        if len(rpi1_values) == 3:
+            if(rpi1_values[0] > 300 and rpi1_values[1] > 300 and rpi1_values[2] > 300):
+                '''
+                
+                SEND HTTP SIGNAL TO ARDUINO TO LET IT KNOW TO TAKE PHOTO!!!!!!
+                
+                
+                '''
+            rpi1_values = []
+                
+   
+'''
+
+
+
+MQTT SCHTUFF ENDS!!!!!
+
+
+
+'''
+
+
+colors = ['Red', 'Purple', 'Yellow', 'Gray', 'Blue', 'Green']
 
 
 def text_on_detected_boxes(text,text_x,text_y,image,font_scale = 1,
@@ -71,50 +125,60 @@ def emotionImage(imgPath):
         # Overlay our detected emotion on the picture
         text_on_detected_boxes(label, label_position[0],label_position[1], image)
     cv2.imshow("Emotion Detector", image)
+    
+    '''
+    
+    OUTPUTTING LABEL SCHTUFF
+    
+    
+    '''
+    
+    if label == 'Angry':
+        client.publish('computer/color', colors[0])
+    elif label == 'Fear':
+        client.publish('computer/color', colors[1])
+    elif label == 'Happy':
+        client.publish('computer/color', colors[2])
+    elif label == 'Neutral':
+        client.publish('computer/color', colors[3])
+    elif label == 'Sad':
+        client.publish('computer/color', colors[4])
+    elif label == 'Surprise':
+        client.publish('computer/color', colors[5])
+    
+    '''
+    
+    END OF OUTPUT PART
+    
+    
+    '''
+    
+    
     cv2.waitKey(15000)
     cv2.destroyAllWindows()
-# Detection of the expression on video stream
 
 
-def face_detector_video(img):
-    # Convert image to grayscale
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = face_classifier.detectMultiScale(gray, 1.3, 5)
-    if faces is ():
-        return (0, 0, 0, 0), np.zeros((48, 48), np.uint8), img
-    for (x, y, w, h) in faces:
-        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), thickness=2)
-        roi_gray = gray[y:y + h, x:x + w]
-    roi_gray = cv2.resize(roi_gray, (48, 48), interpolation=cv2.INTER_AREA)
-    return (x, w, y, h), roi_gray, img
-    
-   
-def emotionVideo(cap):
-    while True:
-        ret, frame = cap.read()
-        rect, face, image = face_detector_video(frame)
-        if np.sum([face]) != 0.0:
-            roi = face.astype("float") / 255.0
-            roi = img_to_array(roi)
-            roi = np.expand_dims(roi, axis=0)
-            # make a prediction on the ROI, then lookup the class
-            preds = classifier.predict(roi)[0]
-            label = class_labels[preds.argmax()]
-            label_position = (rect[0] + rect[1]//50, rect[2] + rect[3]//50)
-            text_on_detected_boxes(label, label_position[0], label_position[1], image) # You can use this function for your another opencv projects.
-            fps = cap.get(cv2.CAP_PROP_FPS)
-            cv2.putText(image, str(fps),(5, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        else:
-            cv2.putText(image, "No Face Found", (5, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-        cv2.imshow('All', image)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-    cap.release()
-    cv2.destroyAllWindows()
-    
-    
+
+
 if __name__ == '__main__':
-    # camera = cv2.VideoCapture(0) # If you are using an USB Camera then Change use 1 instead of 0.
-    # emotionVideo(camera)
-    IMAGE_PATH = "Pics/18-37-50.jpg"
+    IMAGE_PATH = "Pics/Happy_Caleb.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
+    '''
+    
+    START OF MQTT PART!!!!
+    
+    '''
+    client = mqtt.Client()
+    client.on_message = on_message
+    client.on_connect = on_connect
+    
+    '''
+    
+    CHANGE HOST, DOESN'T EXIST ANYMORE!!!!!!
+    
+    '''
+    client.connect(host="mqtt://localhost", port=1883, keepalive=60)
+    client.loop_start()
+    
+    
+    

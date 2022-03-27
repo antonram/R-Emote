@@ -1,0 +1,81 @@
+'''
+Publish sound sensor information - RPi 1
+'''
+
+import paho.mqtt.client as mqtt
+import requests
+import sys
+
+sys.path.append('/home/pi/Dexter/GrovePi/grove_rgb_lcd')
+
+import grovepi
+import grove_rgb_lcd as lcd
+
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected to server (i.e., broker) with result code "+str(rc))
+    # RPi does subscribe to something
+    client.subscribe('computer/color', 2)
+    client.message_callback_add('computer/color', computer_color_callback)
+    
+#Default message callback.
+def on_message(client, userdata, msg):
+    pass
+
+def computer_color_callback(client, userdata, msg):
+    colr = msg.payload
+    if colr == 'Red':
+       lcd.setRGB(255,0,0) 
+    elif colr == 'Purple':
+       lcd.setRGB(128,0,128) 
+    elif colr == 'Yellow':
+        lcd.setRGB(255,255,0) 
+    elif colr == 'Gray':
+        lcd.setRGB(128,128,128) 
+    elif colr == 'Blue':
+        lcd.setRGB(0,0,255)
+    elif colr == 'Green':
+        lcd.setRGB(0,255,0)
+    
+    
+    
+
+
+if __name__ == '__main__':
+    # connect to MQTT broker
+    client = mqtt.Client()
+    client.on_message = on_message
+    client.on_connect = on_connect
+    '''
+    
+    CHANGE HOST, DOESN'T WORK!!!!!!
+    
+    '''
+    client.connect(host="mqtt://localhost", port=1883, keepalive=60)
+    client.loop_start()
+
+    # Connect the Grove Sound Sensor to analog port A0
+    # SIG,NC,VCC,GND
+    sound_sensor = 0
+    grovepi.pinMode(sound_sensor,"INPUT")
+    
+    
+
+
+    # constantly get data and publish it
+    while True:
+        try:
+            sound_data = grovepi.analogRead(sound_sensor)
+            client.publish('rpi1/sound_sensor', sound_data)
+
+            
+            time.sleep(.1)
+
+        except IOError:
+            print ("Error")
+
+        except KeyboardInterrupt:
+            # Gracefully shutdown on Ctrl-C}
+            lcd.setText('')
+            lcd.setRGB(0, 0, 0)
+            break
