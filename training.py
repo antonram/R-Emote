@@ -1,3 +1,4 @@
+import paho.mqtt.client as mqtt
 from tensorflow.keras import Sequential
 from tensorflow.keras.models import load_model
 import cv2
@@ -22,6 +23,63 @@ classes = list(class_labels.values())
 # print(class_labels)
 face_classifier = cv2.CascadeClassifier('./Haarcascades/haarcascade_frontalface_default.xml')
 # This function is for designing the overlay text on the predicted image boxes.
+
+'''
+
+
+MQTT STUFF INTERRUPT
+
+
+'''
+
+rpi1_values = []
+
+# MQTT
+def on_connect(client, userdata, flags, rc):
+    print("Connected to server (i.e., broker) with result code "+str(rc))
+
+    #subscribe to the ultrasonic ranger topic here
+    client.subscribe('rpi1/sound_info', 2)
+    client.message_callback_add('rpi1/sound_info', rpi1_sound_callback)
+
+
+#Default message callback.
+def on_message(client, userdata, msg):
+    pass
+
+
+def rpi1_sound_callback(client, userdata, msg):
+    if len(rpi1_values) < 3:
+    # ADD EACH INDIVIDUAL DATA POINT
+        rpi1_values.append(int(msg.payload))
+        if len(rpi1_values) == 3:
+            if(rpi1_values[0] > 300 and rpi1_values[1] > 300 and rpi1_values[2] > 300):
+                '''
+                
+                SEND HTTP SIGNAL TO ARDUINO TO LET IT KNOW TO TAKE PHOTO!!!!!!
+                
+                
+                '''
+            rpi1_values = []
+                
+    
+    print('RPi 1 Sound: ' + str(msg.payload, 'utf-8'))
+    if len(rpi1_values) < 5:
+        rpi1_values.append(int(msg.payload))
+
+
+'''
+
+
+
+MQTT SCHTUFF ENDS!!!!!
+
+
+
+'''
+
+
+
 
 
 def text_on_detected_boxes(text,text_x,text_y,image,font_scale = 1,
@@ -118,3 +176,22 @@ if __name__ == '__main__':
     # emotionVideo(camera)
     IMAGE_PATH = "Pics/18-37-50.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
+    '''
+    
+    START OF MQTT PART!!!!
+    
+    '''
+    client = mqtt.Client()
+    client.on_message = on_message
+    client.on_connect = on_connect
+    
+    '''
+    
+    CHANGE HOST, DOESN'T EXIST ANYMORE!!!!!!
+    
+    '''
+    client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
+    client.loop_start()
+    
+    
+    
