@@ -71,7 +71,7 @@ def emotionImage(imgPath):
         # Overlay our detected emotion on the picture
         text_on_detected_boxes(label, label_position[0],label_position[1], image)
     cv2.imshow("Emotion Detector", image)
-    cv2.waitKey(1000)
+    cv2.waitKey(15000)
     cv2.destroyAllWindows()
 # Detection of the expression on video stream
 
