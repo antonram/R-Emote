@@ -70,6 +70,7 @@ if __name__ == '__main__':
         try:
             ultrasonic_ranger = 4
             distance = grovepi.ultrasonicRead(ultrasonic_ranger)
+            print(distance)
             if distance <= 92:
                 sound_data = grovepi.analogRead(sound_sensor)
                 client.publish('rpi1-sound_sensor', sound_data)
