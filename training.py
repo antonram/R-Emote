@@ -164,7 +164,7 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
     client.loop_start()
-    IMAGE_PATH = "Pics/Angry_Antoninia.jpg"
+    IMAGE_PATH = "Pics/Happy_Caleb.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
     yes = 0
     while True:
