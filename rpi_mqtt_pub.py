@@ -65,8 +65,11 @@ if __name__ == '__main__':
     # constantly get data and publish it
     while True:
         try:
-            sound_data = grovepi.analogRead(sound_sensor)
-            client.publish('rpi1/sound_sensor', sound_data)
+            ultrasonic_ranger = 4
+            distance = grovepi.ultrasonicRead(ultrasonic_ranger)
+            if distance <= 92:
+                sound_data = grovepi.analogRead(sound_sensor)
+                client.publish('rpi1/sound_sensor', sound_data)
 
             
             time.sleep(.1)
