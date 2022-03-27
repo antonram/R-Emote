@@ -156,7 +156,9 @@ def emotionImage(imgPath):
     cv2.waitKey(15000)
     cv2.destroyAllWindows()
 
-    
+
+global client
+
 if __name__ == '__main__':
     IMAGE_PATH = "Pics/Happy_Caleb.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
@@ -165,7 +167,7 @@ if __name__ == '__main__':
     START OF MQTT PART!!!!
     
     '''
-    global client = mqtt.Client()
+    client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
     
