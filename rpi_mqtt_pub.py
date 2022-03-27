@@ -26,17 +26,17 @@ def on_message(client, userdata, msg):
 def computer_color_callback(client, userdata, msg):
     print(msg.payload)
     colr = msg.payload
-    if colr == 'Red':
+    if colr == b'Red':
        lcd.setRGB(255,0,0) 
-    elif colr == 'Purple':
+    elif colr == b'Purple':
        lcd.setRGB(128,0,128) 
-    elif colr == 'Yellow':
+    elif colr == b'Yellow':
         lcd.setRGB(255,255,0) 
-    elif colr == 'Gray':
+    elif colr == b'Gray':
         lcd.setRGB(128,128,128) 
-    elif colr == 'Blue':
+    elif colr == b'Blue':
         lcd.setRGB(0,0,255)
-    elif colr == 'Green':
+    elif colr == b'Green':
         lcd.setRGB(0,255,0)
     
     
