@@ -16,7 +16,7 @@ import grove_rgb_lcd as lcd
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
     # RPi does subscribe to something
-    client.subscribe('computer-color', 2)
+    client.subscribe('computer-color')
     client.message_callback_add('computer-color', computer_color_callback)
     
 #Default message callback.
