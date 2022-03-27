@@ -33,7 +33,7 @@ MQTT STUFF INTERRUPT
 
 '''
 
-rpi1_values = []
+
 
 # MQTT
 def on_connect(client, userdata, flags, rc):
@@ -49,6 +49,7 @@ def on_message(client, userdata, msg):
     pass
 
 no = 0
+rpi1_values = []
 def rpi1_sound_callback(client, userdata, msg):
     print(str(msg.payload))
     if len(rpi1_values) < 3:
