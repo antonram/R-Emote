@@ -109,35 +109,9 @@ def face_detector_image(img):
     return rects, allfaces, img
     
     
+client = mqtt.Client()    
 
-
-if __name__ == '__main__':
-    IMAGE_PATH = "Pics/Happy_Caleb.jpg"
-    emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
     
-    '''
-    
-    START OF MQTT PART!!!!
-    
-    '''
-    
-    client = mqtt.Client()
-    client.on_message = on_message
-    client.on_connect = on_connect
-    
-    
-    '''
-    
-    CHANGE HOST, DOESN'T EXIST ANYMORE!!!!!!
-    
-    '''
-    
-    client.connect(host="testsystem1.westus2.azurecontainer.io", port=1883, keepalive=60)
-    client.loop_start()
-   
-    
-
-
 def emotionImage(imgPath):
     img = cv2.imread(imgPath)
     rects, faces, image = face_detector_image(img)
@@ -183,6 +157,38 @@ def emotionImage(imgPath):
     
     cv2.waitKey(15000)
     cv2.destroyAllWindows()
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    IMAGE_PATH = "Pics/Happy_Caleb.jpg"
+    emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
+    
+    '''
+    
+    START OF MQTT PART!!!!
+    
+    '''
+    
+    
+    client.on_message = on_message
+    client.on_connect = on_connect
+    
+    
+    '''
+    
+    CHANGE HOST, DOESN'T EXIST ANYMORE!!!!!!
+    
+    '''
+    
+    client.connect(host="testsystem1.westus2.azurecontainer.io", port=1883, keepalive=60)
+    client.loop_start()
+   
+    
 
 
     
