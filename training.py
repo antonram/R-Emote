@@ -52,15 +52,19 @@ no = 0
 rpi1_values = []
 def rpi1_sound_callback(client, userdata, msg):
     print(str(msg.payload))
+    '''
     if len(rpi1_values) < 3:
     # ADD EACH INDIVIDUAL DATA POINT
         rpi1_values.append(atoi(msg.payload))
+     '''
+        '''
         if len(rpi1_values) == 3:
             if(rpi1_values[0] > 300 and rpi1_values[1] > 300 and rpi1_values[2] > 300):
                 no += 1
                 if no == 100:
                     no = 0
             rpi1_values = []
+        '''
                 
    
 '''
