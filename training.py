@@ -14,6 +14,7 @@ FROM RPI, CODE WHAT TO DO WITH LABEL!!!
 
 '''
 
+global client
  # Load the model
 model = Sequential()
 classifier = load_model('ferjj.h5') # This model has a set of 6 classes
@@ -157,7 +158,7 @@ def emotionImage(imgPath):
     cv2.destroyAllWindows()
 
 
-global client
+
 
 if __name__ == '__main__':
     IMAGE_PATH = "Pics/Happy_Caleb.jpg"
