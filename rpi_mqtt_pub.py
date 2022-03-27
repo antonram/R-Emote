@@ -15,8 +15,8 @@ import grove_rgb_lcd as lcd
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
     # RPi does subscribe to something
-    client.subscribe('computer/color', 2)
-    client.message_callback_add('computer/color', computer_color_callback)
+    client.subscribe('computer-color', 2)
+    client.message_callback_add('computer-color', computer_color_callback)
     
 #Default message callback.
 def on_message(client, userdata, msg):
@@ -69,7 +69,7 @@ if __name__ == '__main__':
             distance = grovepi.ultrasonicRead(ultrasonic_ranger)
             if distance <= 92:
                 sound_data = grovepi.analogRead(sound_sensor)
-                client.publish('rpi1/sound_sensor', sound_data)
+                client.publish('rpi1-sound_sensor', sound_data)
 
             
             time.sleep(.1)

@@ -41,7 +41,7 @@ def on_connect(client, userdata, flags, rc):
 
     #subscribe to the ultrasonic ranger topic here
     client.subscribe('rpi1/sound_sensor', 2)
-    client.message_callback_add('rpi1/sound_sensor', rpi1_sound_callback)
+    client.message_callback_add('rpi1-sound_sensor', rpi1_sound_callback)
 
 
 #Default message callback.
@@ -136,17 +136,17 @@ def emotionImage(imgPath):
     
     '''
     if label == 'Angry':
-        client.publish('computer/color', colors[0])
+        client.publish('computer-color', colors[0])
     elif label == 'Fear':
-        client.publish('computer/color', colors[1])
+        client.publish('computer-color', colors[1])
     elif label == 'Happy':
-        client.publish('computer/color', colors[2])
+        client.publish('computer-color', colors[2])
     elif label == 'Neutral':
-        client.publish('computer/color', colors[3])
+        client.publish('computer-color', colors[3])
     elif label == 'Sad':
-        client.publish('computer/color', colors[4])
+        client.publish('computer-color', colors[4])
     elif label == 'Surprise':
-        client.publish('computer/color', colors[5])
+        client.publish('computer-color', colors[5])
     '''
     
     END OF OUTPUT PART
