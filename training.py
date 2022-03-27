@@ -39,8 +39,8 @@ def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
     #subscribe to the ultrasonic ranger topic here
-    client.subscribe('rpi1/sound_info', 2)
-    client.message_callback_add('rpi1/sound_info', rpi1_sound_callback)
+    client.subscribe('rpi1/sound_sensor', 2)
+    client.message_callback_add('rpi1/sound_sensor', rpi1_sound_callback)
 
 
 #Default message callback.
