@@ -132,7 +132,7 @@ def emotionImage(imgPath):
     
     
     '''
-    
+    '''
     if label == 'Angry':
         client.publish('computer/color', colors[0])
     elif label == 'Fear':
@@ -145,7 +145,7 @@ def emotionImage(imgPath):
         client.publish('computer/color', colors[4])
     elif label == 'Surprise':
         client.publish('computer/color', colors[5])
-    
+    '''
     '''
     
     END OF OUTPUT PART
@@ -163,22 +163,27 @@ def emotionImage(imgPath):
 if __name__ == '__main__':
     IMAGE_PATH = "Pics/Disgusted_Antonina.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
+    
     '''
     
     START OF MQTT PART!!!!
     
     '''
+    '''
     client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
+    '''
     
     '''
     
     CHANGE HOST, DOESN'T EXIST ANYMORE!!!!!!
     
     '''
+    '''
     client.connect(host="mqtt://localhost", port=8883, keepalive=60)
     client.loop_start()
+    '''
     
     
     
