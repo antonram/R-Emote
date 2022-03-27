@@ -172,6 +172,7 @@ if __name__ == '__main__':
     client.loop_start()
     IMAGE_PATH = "Pics/Angry_Antoninia.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
+    yes = 0
     while True:
         yes += 1
    
