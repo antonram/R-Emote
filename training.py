@@ -165,7 +165,7 @@ if __name__ == '__main__':
     START OF MQTT PART!!!!
     
     '''
-    client = mqtt.Client()
+    global client = mqtt.Client()
     client.on_message = on_message
     client.on_connect = on_connect
     
