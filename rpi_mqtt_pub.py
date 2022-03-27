@@ -13,13 +13,25 @@ import grovepi
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
     # RPi doesn't subscribe to anything
+    
+#Default message callback.
+def on_message(client, userdata, msg):
+    pass
 
+def computer_color_callback(client, userdata, msg):
+    colr = msg.payload
+    '''
+    
+    
+    CODE TO OUTPUT TO ARDUINO TO DISPLAY THE COLOR
+    
+    '''
 
 
 if __name__ == '__main__':
     # connect to MQTT broker
     client = mqtt.Client()
-    #client.on_message = on_message
+    client.on_message = on_message
     client.on_connect = on_connect
     '''
     
@@ -32,8 +44,10 @@ if __name__ == '__main__':
     # Connect the Grove Sound Sensor to analog port A0
     # SIG,NC,VCC,GND
     sound_sensor = 0
-
     grovepi.pinMode(sound_sensor,"INPUT")
+    
+    client.subscribe('computer/color', 2)
+    client.message_callback_add('computer/color', computer_color_callback)
 
 
     # constantly get data and publish it

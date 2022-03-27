@@ -62,12 +62,7 @@ def rpi1_sound_callback(client, userdata, msg):
                 '''
             rpi1_values = []
                 
-    
-    print('RPi 1 Sound: ' + str(msg.payload, 'utf-8'))
-    if len(rpi1_values) < 5:
-        rpi1_values.append(int(msg.payload))
-
-
+   
 '''
 
 
@@ -79,7 +74,7 @@ MQTT SCHTUFF ENDS!!!!!
 '''
 
 
-
+colors = ['Red', 'Purple', 'Yellow', 'Gray', 'Blue', 'Green']
 
 
 def text_on_detected_boxes(text,text_x,text_y,image,font_scale = 1,
@@ -129,6 +124,35 @@ def emotionImage(imgPath):
         # Overlay our detected emotion on the picture
         text_on_detected_boxes(label, label_position[0],label_position[1], image)
     cv2.imshow("Emotion Detector", image)
+    
+    '''
+    
+    OUTPUTTING LABEL SCHTUFF
+    
+    
+    '''
+    
+    if label == 'Angry':
+        client.publish('computer/color', colors[0])
+    elif label == 'Fear':
+        client.publish('computer/color', colors[1])
+    elif label == 'Happy':
+        client.publish('computer/color', colors[2])
+    elif label == 'Neutral':
+        client.publish('computer/color', colors[3])
+    elif label == 'Sad':
+        client.publish('computer/color', colors[4])
+    elif label == 'Surprise':
+        client.publish('computer/color', colors[5])
+    
+    '''
+    
+    END OF OUTPUT PART
+    
+    
+    '''
+    
+    
     cv2.waitKey(15000)
     cv2.destroyAllWindows()
 # Detection of the expression on video stream
