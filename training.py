@@ -5,6 +5,15 @@ import numpy as np
 from tensorflow.keras.preprocessing.image import img_to_array
 
 
+'''
+
+DIMENSION THAT WORK ===== 275 x 183 pixels!!
+
+OTHER SIZES DO NOT WORK, MAKE SURE TO RESIZE WHEN IMPLEMENTING!!!!!!
+
+
+'''
+
  # Load the model
 model = Sequential()
 classifier = load_model('ferjj.h5') # This model has a set of 6 classes
