@@ -56,12 +56,7 @@ def rpi1_sound_callback(client, userdata, msg):
         rpi1_values.append(int(msg.payload))
         if len(rpi1_values) == 3:
             if(rpi1_values[0] > 300 and rpi1_values[1] > 300 and rpi1_values[2] > 300):
-                '''
-                
-                SEND HTTP SIGNAL TO ARDUINO TO LET IT KNOW TO TAKE PHOTO!!!!!!
-                
-                
-                '''
+                no = 1
             rpi1_values = []
                 
    
@@ -156,7 +151,7 @@ def emotionImage(imgPath):
     '''
     
     
-    cv2.waitKey(15000)
+    cv2.waitKey(1000)
     # cv2.destroyAllWindows()
 
 
