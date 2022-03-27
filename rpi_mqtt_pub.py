@@ -51,7 +51,8 @@ if __name__ == '__main__':
     CHANGE HOST, DOESN'T WORK!!!!!!
     
     '''
-    client.connect(host="testsystem1.westus2.azurecontainer.io", port=1883, keepalive=60)
+    # testsystem1.westus2.azurecontainer.io
+    client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
     client.loop_start()
 
     # Connect the Grove Sound Sensor to analog port A0

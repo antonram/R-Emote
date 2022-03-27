@@ -185,7 +185,7 @@ if __name__ == '__main__':
     
     '''
     
-    client.connect(host="testsystem1.westus2.azurecontainer.io", port=1883, keepalive=60)
+    client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
     client.loop_start()
    
     
