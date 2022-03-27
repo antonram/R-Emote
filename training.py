@@ -161,7 +161,7 @@ def emotionImage(imgPath):
 
 
 if __name__ == '__main__':
-    IMAGE_PATH = "Pics/Sad_Anton.jpg"
+    IMAGE_PATH = "Pics/Surprised_Antonina.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
     
     '''
