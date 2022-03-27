@@ -165,28 +165,16 @@ def emotionImage(imgPath):
 
 
 if __name__ == '__main__':
+    client.on_message = on_message
+    client.on_connect = on_connect
+    client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
+    client.loop_start()
     IMAGE_PATH = "Pics/Angry_Antoninia.jpg"
     emotionImage(IMAGE_PATH) # If you are using this on an image please provide the path
     
-    '''
+   
     
-    START OF MQTT PART!!!!
-    
-    '''
-    
-    
-    client.on_message = on_message
-    client.on_connect = on_connect
-    
-    
-    '''
-    
-    CHANGE HOST, DOESN'T EXIST ANYMORE!!!!!!
-    
-    '''
-    
-    client.connect(host="eclipse.usc.edu", port=1883, keepalive=60)
-    client.loop_start()
+   
    
     
 
