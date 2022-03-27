@@ -6,13 +6,17 @@ import paho.mqtt.client as mqtt
 import requests
 import sys
 
-import grovepi
+sys.path.append('/home/pi/Dexter/GrovePi/grove_rgb_lcd')
 
+import grovepi
+import grove_rgb_lcd as lcd
 
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
-    # RPi doesn't subscribe to anything
+    # RPi does subscribe to something
+    client.subscribe('computer/color', 2)
+    client.message_callback_add('computer/color', computer_color_callback)
     
 #Default message callback.
 def on_message(client, userdata, msg):
@@ -20,12 +24,21 @@ def on_message(client, userdata, msg):
 
 def computer_color_callback(client, userdata, msg):
     colr = msg.payload
-    '''
+    if colr == 'Red':
+       lcd.setRGB(255,0,0) 
+    elif colr == 'Purple':
+       lcd.setRGB(128,0,128) 
+    elif colr == 'Yellow':
+        lcd.setRGB(255,255,0) 
+    elif colr == 'Gray':
+        lcd.setRGB(128,128,128) 
+    elif colr == 'Blue':
+        lcd.setRGB(0,0,255)
+    elif colr == 'Green':
+        lcd.setRGB(0,255,0)
     
     
-    CODE TO OUTPUT TO ARDUINO TO DISPLAY THE COLOR
     
-    '''
 
 
 if __name__ == '__main__':
@@ -46,8 +59,7 @@ if __name__ == '__main__':
     sound_sensor = 0
     grovepi.pinMode(sound_sensor,"INPUT")
     
-    client.subscribe('computer/color', 2)
-    client.message_callback_add('computer/color', computer_color_callback)
+    
 
 
     # constantly get data and publish it
@@ -63,5 +75,7 @@ if __name__ == '__main__':
             print ("Error")
 
         except KeyboardInterrupt:
-            # Gracefully shutdown on Ctrl-C
+            # Gracefully shutdown on Ctrl-C}
+            lcd.setText('')
+            lcd.setRGB(0, 0, 0)
             break
