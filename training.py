@@ -132,7 +132,6 @@ def emotionImage(imgPath):
     
     
     '''
-    '''
     if label == 'Angry':
         client.publish('computer/color', colors[0])
     elif label == 'Fear':
@@ -145,7 +144,6 @@ def emotionImage(imgPath):
         client.publish('computer/color', colors[4])
     elif label == 'Surprise':
         client.publish('computer/color', colors[5])
-    '''
     '''
     
     END OF OUTPUT PART
