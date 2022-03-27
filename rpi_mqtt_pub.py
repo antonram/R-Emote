@@ -24,7 +24,7 @@ def on_message(client, userdata, msg):
     pass
 
 def computer_color_callback(client, userdata, msg):
-    print(str(msg.payload))
+    print(msg.payload)
     colr = msg.payload
     if colr == 'Red':
        lcd.setRGB(255,0,0) 
