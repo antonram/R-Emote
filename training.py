@@ -50,6 +50,7 @@ def on_message(client, userdata, msg):
 
 
 def rpi1_sound_callback(client, userdata, msg):
+    print("YES")
     print(str(msg.payload))
     if len(rpi1_values) < 3:
     # ADD EACH INDIVIDUAL DATA POINT
