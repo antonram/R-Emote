@@ -156,7 +156,7 @@ def emotionImage(imgPath):
     
     
     cv2.waitKey(15000)
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
 
 
 
