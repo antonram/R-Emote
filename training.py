@@ -169,6 +169,7 @@ if __name__ == '__main__':
     
     '''
     client = mqtt.Client()
+    print(client)
     client.on_message = on_message
     client.on_connect = on_connect
     
