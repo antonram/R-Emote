@@ -55,6 +55,9 @@ void loop() {
 
   if( abs(noise_level-SOUND_SENSOR_THRES) > 6 && distance < ULTRASONIC_RANGEFINDER_THRES){
     Serial.println("I'm talking to someone.");
+    //start recording audio and save it to SD card
+    //take picture and save it to SD card
+    //Send files to SW side (server, MQTT, etc)
   }  
   
   
